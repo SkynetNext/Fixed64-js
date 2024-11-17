@@ -1,0 +1,10 @@
+# ninja log v6
+104	4193	7535640043158907	CMakeFiles/Fixed64.dir/src/Interop.cpp.o	f09d0fdc59a27de6
+73	4316	7535643675449957	CMakeFiles/Fixed64.dir/src/Sector.cpp.o	ab05ec309230291d
+40	4541	7535642197697936	CMakeFiles/Fixed64.dir/src/Fixed64Wrapper.cpp.o	9a443530c3f2e3f9
+111	4330	7535643675838921	CMakeFiles/Fixed64.dir/src/Vector2.cpp.o	a0d514b11cda21a6
+41	4596	7535643675131035	CMakeFiles/Fixed64.dir/src/Rect.cpp.o	4696adebd35ffd1c
+54	2165	7535644524222911	CMakeFiles/Fixed64.dir/src/Vector3.cpp.o	148dadc1181e00a9
+8	2536	7535644523754148	CMakeFiles/Fixed64.dir/src/Bindings.cpp.o	70f25ecc6062eb29
+8	1968	7535645029425213	CMakeFiles/Fixed64.dir/src/Interop.cpp.o	f09d0fdc59a27de6
+1969	19841	7535645049043343	J:/x1/Fixed64.js/dist/Fixed64.js	66d5ff139df92a0a
