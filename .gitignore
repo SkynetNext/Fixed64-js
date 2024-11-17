@@ -119,3 +119,4 @@ client/assets/scene/UIEditor.scene.meta
 
 config/*/**
 src/cpp/build/
+node_modules/
