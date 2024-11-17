@@ -1,3 +1,0 @@
-J:/x1/Fixed64.js/src/cpp/build/CMakeFiles/Fixed64.dir
-J:/x1/Fixed64.js/src/cpp/build/CMakeFiles/edit_cache.dir
-J:/x1/Fixed64.js/src/cpp/build/CMakeFiles/rebuild_cache.dir
