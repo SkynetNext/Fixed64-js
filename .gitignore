@@ -118,6 +118,4 @@ client/assets/scene/UIEditor.scene
 client/assets/scene/UIEditor.scene.meta
 
 config/*/**
-build_client/
-build_svr/
-tools/emsdk/
+src/cpp/build/
