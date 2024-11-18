@@ -1,4 +1,11 @@
 {
+  "name": "fixed64.js",
+  "version": "1.0.0",
+  "main": "examples/Fixed64Example.ts",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/Fixed64Example.js"
+  },
   "devDependencies": {
     "@types/node": "^22.9.0"
   }

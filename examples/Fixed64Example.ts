@@ -4,7 +4,11 @@ import { Fixed64 } from '../src/ts/Fixed64';
 
 async function main() {
     // Load the Fixed64 module
-    await loadFixed64Wasm();
+    await loadFixed64Wasm().then(() => {
+        console.log("=== loadFixed64Wasm:success =========== ");
+    }).catch(error => {
+        console.error("Error loadFixed64Wasm module:", error);
+    });
 
     // Assuming fixed64 provides methods to directly operate on numbers
     // Note: The actual implementation might need adjustments according to your WASM module's API
