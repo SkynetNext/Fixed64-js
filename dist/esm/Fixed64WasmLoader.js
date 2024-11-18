@@ -1,31 +1,26 @@
 // Fixed64WasmLoader.ts
-
 import { fileURLToPath } from 'url';
 import { dirname, join } from 'path';
-
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
-
-let MainModuleFactory: any;
-
+let MainModuleFactory;
 import('../../dist/Fixed64Native.js').then(module => {
     MainModuleFactory = module.default;
 });
-
-export let Fixed64Module: any;
-export let interopParamArrayAddress: number;
-export let interopParamUint32ArrayAddress: number;
-export let interopReturnArrayAddress: number;
-export let interopReturnUint32ArrayAddress: number;
-export let sizeOfFixed64Param: number;
-export let fixed64ParamOffsets: any;
-
-async function loadWasmFile(url: string): Promise<Uint8Array> {
+export let Fixed64Module;
+export let interopParamArrayAddress;
+export let interopParamUint32ArrayAddress;
+export let interopReturnArrayAddress;
+export let interopReturnUint32ArrayAddress;
+export let sizeOfFixed64Param;
+export let fixed64ParamOffsets;
+async function loadWasmFile(url) {
     if (typeof window !== 'undefined') {
         console.log("Loading WASM from URL");
         const response = await fetch(new URL(url, window.location.href));
         return new Uint8Array(await response.arrayBuffer());
-    } else if (typeof process !== 'undefined') {
+    }
+    else if (typeof process !== 'undefined') {
         console.log("Loading WASM from filesystem");
         const fs = (await import('fs/promises')).default;
         console.log("__dirname:", __dirname);
@@ -35,8 +30,7 @@ async function loadWasmFile(url: string): Promise<Uint8Array> {
     }
     throw new Error('Unsupported environment');
 }
-
-export async function loadFixed64Wasm(url: string): Promise<any> {
+export async function loadFixed64Wasm(url) {
     if (!Fixed64Module) {
         const wasmData = await loadWasmFile(url);
         console.log(typeof MainModuleFactory);
@@ -50,12 +44,11 @@ export async function loadFixed64Wasm(url: string): Promise<any> {
     }
     return Fixed64Module;
 }
-
-function initWasm(wasmFactory: any, wasmData: Uint8Array): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
+function initWasm(wasmFactory, wasmData) {
+    return new Promise((resolve, reject) => {
         wasmFactory({
-            instantiateWasm(importObject: WebAssembly.Imports, receiveInstance: (instance: WebAssembly.Instance, module: WebAssembly.Module) => void) {
-                WebAssembly.instantiate(wasmData, importObject).then((result: any) => {
+            instantiateWasm(importObject, receiveInstance) {
+                WebAssembly.instantiate(wasmData, importObject).then((result) => {
                     receiveInstance(result.instance, result.module);
                 }).catch(reject);
             }

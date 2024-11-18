@@ -1,12 +1,20 @@
 {
   "name": "fixed64.js",
   "version": "1.0.0",
-  "main": "examples/Fixed64Example.ts",
+  "main": "dist/cjs/Fixed64.js",
+  "module": "dist/esm/Fixed64.js",
+  "types": "dist/cjs/Fixed64.d.ts",
+  "type": "module",
   "scripts": {
-    "build": "tsc",
-    "start": "node dist/Fixed64Example.js"
+    "build:cjs": "tsc -p tsconfig.cjs.json",
+    "build:esm": "tsc -p tsconfig.esm.json",
+    "build": "npm run build:cjs && npm run build:esm"
   },
   "devDependencies": {
-    "@types/node": "^22.9.0"
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "undici": "^6.21.0"
   }
 }
