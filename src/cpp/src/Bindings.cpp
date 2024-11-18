@@ -80,4 +80,3 @@ EMSCRIPTEN_BINDINGS(Sector_module) {
   class_<Sector>("Sector").constructor<>().class_function(
       "overlapsWithCircle", &Sector::overlapsWithCircle);
 }
-

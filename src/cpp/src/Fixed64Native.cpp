@@ -1,5 +1,3 @@
-#include "Fixed64Wrapper.h"
-
 #include <emscripten/bind.h>
 #include <emscripten/val.h>
 
@@ -10,6 +8,7 @@
 #include <random>
 
 #include "Fixed64.h"
+#include "Fixed64Native.h"
 #include "FixedMath.h"
 
 using namespace emscripten;
@@ -17,8 +16,7 @@ using namespace Skynet;
 
 int getSizeOfFixed64Param() { return sizeof(Fixed64Param); }
 
-emscripten::val getFixed64ParamOffsets()
-{
+emscripten::val getFixed64ParamOffsets() {
   emscripten::val offsets = emscripten::val::object();
   offsets.set("isRaw", offsetof(Fixed64Param, isRaw));
   offsets.set("raw", offsetof(Fixed64Param, raw));
@@ -27,27 +25,23 @@ emscripten::val getFixed64ParamOffsets()
   return offsets;
 }
 
-std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
-{
+std::string Fixed64Native::testPerformance(const uint32_t testTimes) {
   auto operands = std::make_unique<std::vector<double>>(testTimes);
   auto fixedOperands = std::make_unique<std::vector<Fixed64>>(testTimes);
   auto fixedOperands2 = std::make_unique<std::vector<Fixed64>>(testTimes);
 
   std::mt19937_64 rng(std::random_device{}());
   std::uniform_real_distribution<double> dist(-200.0, 200.0);
-  for (size_t i = 0; i < testTimes; ++i)
-  {
+  for (size_t i = 0; i < testTimes; ++i) {
     double op = dist(rng);
     (*operands)[i] = op;
     (*fixedOperands)[i] = Fixed64(op);
   }
 
-  for (size_t i = 0; i < testTimes; ++i)
-  {
+  for (size_t i = 0; i < testTimes; ++i) {
     double op = dist(rng);
     (*fixedOperands2)[i] = Fixed64(op);
-    if ((*fixedOperands2)[i] == 0)
-    {
+    if ((*fixedOperands2)[i] == 0) {
       i--;
     }
   }
@@ -55,11 +49,9 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   auto intOperands = std::make_unique<std::vector<int64_t>>(testTimes);
 
   std::uniform_int_distribution<int64_t> intDist(-200, 200);
-  for (size_t i = 0; i < testTimes; ++i)
-  {
-    int64_t opInt = intDist(rng); // 生成一个随机整数
-    if (opInt == 0)
-    {
+  for (size_t i = 0; i < testTimes; ++i) {
+    int64_t opInt = intDist(rng);
+    if (opInt == 0) {
       i--;
       continue;
     }
@@ -71,8 +63,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // Fixed64 add
   Fixed64 result(200.0);
   auto start = std::chrono::high_resolution_clock::now();
-  for (const auto &fixedOp : *fixedOperands)
-  {
+  for (const auto &fixedOp : *fixedOperands) {
     result = result + fixedOp;
     result = FixedMath::Clamp(result, -200, 200);
   }
@@ -84,8 +75,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // Fixed64 sub
   result = Fixed64(200.0);
   start = std::chrono::high_resolution_clock::now();
-  for (const auto &fixedOp : *fixedOperands)
-  {
+  for (const auto &fixedOp : *fixedOperands) {
     result = result - fixedOp;
     result = FixedMath::Clamp(result, -200, 200);
   }
@@ -98,8 +88,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   result = Fixed64(200.0);
   start = std::chrono::high_resolution_clock::now();
 
-  for (const auto &fixedOp : *fixedOperands)
-  {
+  for (const auto &fixedOp : *fixedOperands) {
     result = result * fixedOp;
     result = FixedMath::Clamp(result, 2, 200);
   }
@@ -111,8 +100,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // Fixed64 div
   result = Fixed64(200.0);
   start = std::chrono::high_resolution_clock::now();
-  for (const auto &fixedOp : *fixedOperands2)
-  {
+  for (const auto &fixedOp : *fixedOperands2) {
     result = result / fixedOp;
     result = FixedMath::Clamp(result, 2, 200);
   }
@@ -124,9 +112,8 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // Fixed64 atan2
   start = std::chrono::high_resolution_clock::now();
   result = Fixed64(200.0);
-  for (size_t i = 0; i < testTimes; ++i)
-  {
-    // 使用第二个操作数作为x，保证除数不为0
+  for (size_t i = 0; i < testTimes; ++i) {
+    // Use the second operand as x, ensuring the divisor is not zero
     result = FixedMath::Atan2(result, fixedOperands2->at(i));
     result = FixedMath::Clamp(result, -200, 200);
   }
@@ -139,8 +126,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // int64_t add
   int64_t resultInt = 200;
   start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < testTimes; ++i)
-  {
+  for (size_t i = 0; i < testTimes; ++i) {
     resultInt = resultInt + (*intOperands)[i];
     resultInt = std::clamp(resultInt, (int64_t)-200, (int64_t)200);
   }
@@ -152,8 +138,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // int64_t sub
   resultInt = 200;
   start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < testTimes; ++i)
-  {
+  for (size_t i = 0; i < testTimes; ++i) {
     resultInt = resultInt - (*intOperands)[i];
     resultInt = std::clamp(resultInt, (int64_t)-200, (int64_t)200);
   }
@@ -165,8 +150,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // int64_t mul
   resultInt = 3;
   start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < testTimes; ++i)
-  {
+  for (size_t i = 0; i < testTimes; ++i) {
     resultInt = resultInt * (*intOperands)[i];
     resultInt = std::clamp(resultInt, (int64_t)2, (int64_t)200);
   }
@@ -178,8 +162,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   // int64_t div
   resultInt = INT64_MAX;
   start = std::chrono::high_resolution_clock::now();
-  for (size_t i = 0; i < testTimes; ++i)
-  {
+  for (size_t i = 0; i < testTimes; ++i) {
     resultInt = resultInt / (*intOperands)[i];
     resultInt = std::clamp(resultInt, (int64_t)2, (int64_t)200);
   }
@@ -191,8 +174,7 @@ std::string Fixed64Wrapper::testPerformance(const uint32_t testTimes)
   return resultStream.str();
 }
 
-EMSCRIPTEN_BINDINGS(decimal_module)
-{
+EMSCRIPTEN_BINDINGS(decimal_module) {
   value_object<Fixed64Param>("Fixed64Param")
       .field("isRaw", &Fixed64Param::isRaw)
       .field("raw", &Fixed64Param::raw)
@@ -210,49 +192,49 @@ EMSCRIPTEN_BINDINGS(decimal_module)
   function("getInteropUint32ParamArrayAddress",
            &getInteropUint32ParamArrayAddress, allow_raw_pointers());
 
-  class_<Fixed64Wrapper>("Fixed64Wrapper")
-      .class_function("parseFloat", &Fixed64Wrapper::parseFloat)
-      .class_function("div", &Fixed64Wrapper::div)
-      .class_function("toNumber", &Fixed64Wrapper::toNumber)
-      .class_function("toString", &Fixed64Wrapper::toString)
-      .class_function("abs", &Fixed64Wrapper::abs)
-      .class_function("acos", &Fixed64Wrapper::acos)
-      .class_function("add", &Fixed64Wrapper::add)
-      .class_function("asin", &Fixed64Wrapper::asin)
-      .class_function("atan", &Fixed64Wrapper::atan)
-      .class_function("atan2", &Fixed64Wrapper::atan2)
-      .class_function("ceil", &Fixed64Wrapper::ceil)
-      .class_function("clamp", &Fixed64Wrapper::clamp)
-      .class_function("cos", &Fixed64Wrapper::cos)
-      .class_function("exp", &Fixed64Wrapper::exp)
-      .class_function("floor", &Fixed64Wrapper::floor)
-      .class_function("mod", &Fixed64Wrapper::mod)
-      .class_function("mul", &Fixed64Wrapper::mul)
-      .class_function("square", &Fixed64Wrapper::square)
-      .class_function("pow2", &Fixed64Wrapper::pow2)
-      .class_function("round", &Fixed64Wrapper::round)
-      .class_function("sign", &Fixed64Wrapper::sign)
-      .class_function("sin", &Fixed64Wrapper::sin)
-      .class_function("sqrt", &Fixed64Wrapper::sqrt)
-      .class_function("sub", &Fixed64Wrapper::sub)
-      .class_function("tan", &Fixed64Wrapper::tan)
-      .class_function("neg", &Fixed64Wrapper::neg)
-      .class_function("isNaN", &Fixed64Wrapper::isNaN)
-      .class_function("isInfinity", &Fixed64Wrapper::isInfinity)
-      .class_function("isFinite", &Fixed64Wrapper::isFinite)
-      .class_function("isInteger", &Fixed64Wrapper::isInteger)
-      .class_function("isNegative", &Fixed64Wrapper::isNegative)
-      .class_function("isPositive", &Fixed64Wrapper::isPositive)
-      .class_function("isZero", &Fixed64Wrapper::isZero)
-      .class_function("gt", &Fixed64Wrapper::gt)
-      .class_function("gte", &Fixed64Wrapper::gte)
-      .class_function("lt", &Fixed64Wrapper::lt)
-      .class_function("lte", &Fixed64Wrapper::lte)
-      .class_function("eq", &Fixed64Wrapper::eq)
-      .class_function("cmp", &Fixed64Wrapper::cmp)
-      .class_function("min", &Fixed64Wrapper::min)
-      .class_function("max", &Fixed64Wrapper::max)
-      .class_function("sum", &Fixed64Wrapper::sum)
-      .class_function("testPerformance", &Fixed64Wrapper::testPerformance)
-      .class_function("emptyCall", &Fixed64Wrapper::emptyCall);
+  class_<Fixed64Native>("Fixed64Native")
+      .class_function("parseFloat", &Fixed64Native::parseFloat)
+      .class_function("div", &Fixed64Native::div)
+      .class_function("toNumber", &Fixed64Native::toNumber)
+      .class_function("toString", &Fixed64Native::toString)
+      .class_function("abs", &Fixed64Native::abs)
+      .class_function("acos", &Fixed64Native::acos)
+      .class_function("add", &Fixed64Native::add)
+      .class_function("asin", &Fixed64Native::asin)
+      .class_function("atan", &Fixed64Native::atan)
+      .class_function("atan2", &Fixed64Native::atan2)
+      .class_function("ceil", &Fixed64Native::ceil)
+      .class_function("clamp", &Fixed64Native::clamp)
+      .class_function("cos", &Fixed64Native::cos)
+      .class_function("exp", &Fixed64Native::exp)
+      .class_function("floor", &Fixed64Native::floor)
+      .class_function("mod", &Fixed64Native::mod)
+      .class_function("mul", &Fixed64Native::mul)
+      .class_function("square", &Fixed64Native::square)
+      .class_function("pow2", &Fixed64Native::pow2)
+      .class_function("round", &Fixed64Native::round)
+      .class_function("sign", &Fixed64Native::sign)
+      .class_function("sin", &Fixed64Native::sin)
+      .class_function("sqrt", &Fixed64Native::sqrt)
+      .class_function("sub", &Fixed64Native::sub)
+      .class_function("tan", &Fixed64Native::tan)
+      .class_function("neg", &Fixed64Native::neg)
+      .class_function("isNaN", &Fixed64Native::isNaN)
+      .class_function("isInfinity", &Fixed64Native::isInfinity)
+      .class_function("isFinite", &Fixed64Native::isFinite)
+      .class_function("isInteger", &Fixed64Native::isInteger)
+      .class_function("isNegative", &Fixed64Native::isNegative)
+      .class_function("isPositive", &Fixed64Native::isPositive)
+      .class_function("isZero", &Fixed64Native::isZero)
+      .class_function("gt", &Fixed64Native::gt)
+      .class_function("gte", &Fixed64Native::gte)
+      .class_function("lt", &Fixed64Native::lt)
+      .class_function("lte", &Fixed64Native::lte)
+      .class_function("eq", &Fixed64Native::eq)
+      .class_function("cmp", &Fixed64Native::cmp)
+      .class_function("min", &Fixed64Native::min)
+      .class_function("max", &Fixed64Native::max)
+      .class_function("sum", &Fixed64Native::sum)
+      .class_function("testPerformance", &Fixed64Native::testPerformance)
+      .class_function("emptyCall", &Fixed64Native::emptyCall);
 }

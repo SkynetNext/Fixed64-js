@@ -2,8 +2,7 @@
 
 using namespace Skynet;
 
-bool Sector::overlapsWithCircle()
-{
+bool Sector::overlapsWithCircle() {
   Vector3 center = getInteropVector3Param(0);
   Vector3 direction = getInteropVector3Param(3);
   Fixed64 angle(getInteropParamArray()[6]);

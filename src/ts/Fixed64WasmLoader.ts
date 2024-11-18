@@ -13,7 +13,7 @@ async function loadWasmFile(): Promise<Uint8Array> {
     if (typeof window !== 'undefined') {
         // Browser environment
         // Fetch the WASM file using the Fetch API, relative to the current location
-        const response = await fetch(new URL('../dist/Fixed64.wasm', window.location.href));
+        const response = await fetch(new URL('../../dist/Fixed64Native.wasm', window.location.href));
         // Convert the response to an ArrayBuffer and then to a Uint8Array
         return new Uint8Array(await response.arrayBuffer());
     } else if (typeof process !== 'undefined') {
@@ -21,7 +21,7 @@ async function loadWasmFile(): Promise<Uint8Array> {
         // Use Node.js modules to read the file from the filesystem
         const path = require('path');
         const fs = require('fs').promises; // Use the promises API of the fs module for async operations
-        const wasmPath = path.join(__dirname, '../dist/Fixed64.wasm'); // Construct the path to the WASM file
+        const wasmPath = path.join(__dirname, '../../dist/Fixed64Native.wasm'); // Construct the path to the WASM file
         return fs.readFile(wasmPath); // Read and return the file as a Uint8Array
     }
 

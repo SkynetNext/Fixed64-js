@@ -60,7 +60,7 @@ export type Fixed64Param = {
   low: number
 };
 
-export interface Fixed64Wrapper {
+export interface Fixed64Native {
   delete(): void;
 }
 
@@ -81,7 +81,7 @@ interface EmbindModule {
   getInteropReturnArrayAddress(): number;
   getInteropReturnUint32ArrayAddress(): number;
   getInteropUint32ParamArrayAddress(): number;
-  Fixed64Wrapper: {parseFloat(_0: number): void; div(): void; toNumber(): number; toString(): string; abs(): void; acos(): void; add(): void; asin(): void; atan(): void; atan2(): void; ceil(): void; clamp(): void; cos(): void; exp(): void; floor(): void; mod(): void; mul(): void; square(): void; pow2(): void; round(): void; sign(): void; sin(): void; sqrt(): void; sub(): void; tan(): void; neg(): void; isNaN(): boolean; isInfinity(): boolean; isFinite(): boolean; isInteger(): boolean; isNegative(): boolean; isPositive(): boolean; isZero(): boolean; gt(): boolean; gte(): boolean; lt(): boolean; lte(): boolean; eq(): boolean; cmp(): number; min(_0: number): void; max(_0: number): void; sum(_0: number): void; testPerformance(_0: number): string; emptyCall(): void};
+  Fixed64Native: {parseFloat(_0: number): void; div(): void; toNumber(): number; toString(): string; abs(): void; acos(): void; add(): void; asin(): void; atan(): void; atan2(): void; ceil(): void; clamp(): void; cos(): void; exp(): void; floor(): void; mod(): void; mul(): void; square(): void; pow2(): void; round(): void; sign(): void; sin(): void; sqrt(): void; sub(): void; tan(): void; neg(): void; isNaN(): boolean; isInfinity(): boolean; isFinite(): boolean; isInteger(): boolean; isNegative(): boolean; isPositive(): boolean; isZero(): boolean; gt(): boolean; gte(): boolean; lt(): boolean; lte(): boolean; eq(): boolean; cmp(): number; min(_0: number): void; max(_0: number): void; sum(_0: number): void; testPerformance(_0: number): string; emptyCall(): void};
 }
 
 export type MainModule = WasmModule & typeof RuntimeExports & EmbindModule;

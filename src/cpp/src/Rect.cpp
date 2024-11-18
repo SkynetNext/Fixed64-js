@@ -2,8 +2,7 @@
 
 EBattleWorldType WorldType = EBattleWorldType::TwoDimensional;
 
-bool Rect::overlapsWithCircle(bool returnDistSquared)
-{
+bool Rect::overlapsWithCircle(bool returnDistSquared) {
   Vector3 rectCenter = getInteropVector3Param(0);
   Fixed64 rectHalfWidth(getInteropParamArray()[3]);
   Fixed64 rectHeight(getInteropParamArray()[4]);
@@ -13,17 +12,15 @@ bool Rect::overlapsWithCircle(bool returnDistSquared)
 
   Rect rect(rectCenter, rectHalfWidth * 2, rectHeight, rectForward);
   bool ret = rect.overlapsWithCircle(circleCenter, circleRadius);
-  if (returnDistSquared)
-  {
-    getInteropReturnArray()[0] =
-        static_cast<Skynet::Fixed64Param>((circleCenter - rectCenter).lengthSqr());
+  if (returnDistSquared) {
+    getInteropReturnArray()[0] = static_cast<Skynet::Fixed64Param>(
+        (circleCenter - rectCenter).lengthSqr());
   }
 
   return ret;
 }
 
-bool Rect::overlapsWithRect()
-{
+bool Rect::overlapsWithRect() {
   Vector3 rectCenter = getInteropVector3Param(0);
   Fixed64 rectHalfWidth(getInteropParamArray()[3]);
   Fixed64 rectHeight(getInteropParamArray()[4]);
@@ -39,8 +36,7 @@ bool Rect::overlapsWithRect()
   return rect.overlapsWithRect(otherRect);
 }
 
-bool Rect::containsPoint()
-{
+bool Rect::containsPoint() {
   Vector3 rectCenter = getInteropVector3Param(0);
   Fixed64 rectHalfWidth(getInteropParamArray()[3]);
   Fixed64 rectHeight(getInteropParamArray()[4]);
