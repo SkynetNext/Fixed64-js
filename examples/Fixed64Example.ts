@@ -4,7 +4,7 @@ import { Fixed64 } from '../dist/esm/Fixed64.js';
 
 async function main() {
     // Load the Fixed64 module
-    await loadFixed64Wasm("../Fixed64Native.wasm").then(() => {
+    await loadFixed64Wasm().then(() => {
         console.log("=== loadFixed64Wasm:success =========== ");
     }).catch(error => {
         console.error("Error loadFixed64Wasm module:", error);

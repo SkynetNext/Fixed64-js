@@ -45,7 +45,6 @@ async function loadWasmFile(url) {
         const fs = (await Promise.resolve().then(() => __importStar(require('fs/promises')))).default;
         console.log("__dirname:", __dirname);
         const wasmPath = (0, path_1.join)(__dirname, url);
-        console.log("wasmPath:", wasmPath);
         return fs.readFile(wasmPath);
     }
     throw new Error('Unsupported environment');
@@ -53,7 +52,6 @@ async function loadWasmFile(url) {
 async function loadFixed64Wasm(url) {
     if (!exports.Fixed64Module) {
         const wasmData = await loadWasmFile(url);
-        console.log(typeof MainModuleFactory);
         exports.Fixed64Module = await initWasm(MainModuleFactory, wasmData);
         exports.interopParamArrayAddress = exports.Fixed64Module.getInteropParamArrayAddress();
         exports.interopParamUint32ArrayAddress = exports.Fixed64Module.getInteropUint32ParamArrayAddress();

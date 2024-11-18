@@ -20,26 +20,24 @@ export let interopReturnUint32ArrayAddress: number;
 export let sizeOfFixed64Param: number;
 export let fixed64ParamOffsets: any;
 
-async function loadWasmFile(url: string): Promise<Uint8Array> {
+async function loadWasmFile(): Promise<Uint8Array> {
     if (typeof window !== 'undefined') {
         console.log("Loading WASM from URL");
-        const response = await fetch(new URL(url, window.location.href));
+        const response = await fetch(new URL('../Fixed64Native.wasm', window.location.href));
         return new Uint8Array(await response.arrayBuffer());
     } else if (typeof process !== 'undefined') {
         console.log("Loading WASM from filesystem");
         const fs = (await import('fs/promises')).default;
         console.log("__dirname:", __dirname);
-        const wasmPath = join(__dirname, url);
-        console.log("wasmPath:", wasmPath);
+        const wasmPath = join(__dirname, '../Fixed64Native.wasm');
         return fs.readFile(wasmPath);
     }
     throw new Error('Unsupported environment');
 }
 
-export async function loadFixed64Wasm(url: string): Promise<any> {
+export async function loadFixed64Wasm(): Promise<any> {
     if (!Fixed64Module) {
-        const wasmData = await loadWasmFile(url);
-        console.log(typeof MainModuleFactory);
+        const wasmData = await loadWasmFile();
         Fixed64Module = await initWasm(MainModuleFactory, wasmData);
         interopParamArrayAddress = Fixed64Module.getInteropParamArrayAddress();
         interopParamUint32ArrayAddress = Fixed64Module.getInteropUint32ParamArrayAddress();
