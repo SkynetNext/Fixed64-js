@@ -30,22 +30,21 @@ exports.fixed64ParamOffsets = exports.sizeOfFixed64Param = exports.interopReturn
 exports.loadFixed64Wasm = loadFixed64Wasm;
 // Fixed64WasmLoader.ts
 const path_1 = require("path");
+const fs = __importStar(require("fs/promises")); // Standard ES module import
 const Fixed64Native_js_1 = __importDefault(require("../../dist/cjs/Fixed64Native.js"));
-let __dirname = (0, path_1.dirname)(require.main?.filename || '');
 async function loadWasmFile() {
     if (typeof window !== 'undefined') {
         console.log("Loading WASM from URL");
-        const response = await fetch(new URL('../Fixed64Native.wasm', window.location.href));
+        const response = await fetch(new URL('./Fixed64Native.wasm', window.location.href));
         return new Uint8Array(await response.arrayBuffer());
     }
     else if (typeof process !== 'undefined') {
         console.log("Loading WASM from filesystem");
-        const fs = (await Promise.resolve().then(() => __importStar(require('fs/promises')))).default;
         if (process.platform === "win32") {
             // https://stackoverflow.com/questions/64132284/in-windows-node-js-path-join-prepends-the-current-working-directorys-drive
             __dirname = __dirname.replace(/^\/([a-zA-Z]:)/, '$1');
         }
-        const wasmPath = (0, path_1.join)(__dirname, '../Fixed64Native.wasm');
+        const wasmPath = (0, path_1.join)(__dirname, './Fixed64Native.wasm');
         return fs.readFile(wasmPath);
     }
     throw new Error('Unsupported environment');

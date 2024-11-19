@@ -15,7 +15,7 @@ export let fixed64ParamOffsets: any;
 async function loadWasmFile(): Promise<Uint8Array> {
     if (typeof window !== 'undefined') {
         console.log("Loading WASM from URL");
-        const response = await fetch(new URL('../Fixed64Native.wasm', window.location.href));
+        const response = await fetch(new URL('./Fixed64Native.wasm', window.location.href));
         return new Uint8Array(await response.arrayBuffer());
     } else if (typeof process !== 'undefined') {
         console.log("Loading WASM from filesystem");
@@ -24,7 +24,7 @@ async function loadWasmFile(): Promise<Uint8Array> {
             // https://stackoverflow.com/questions/64132284/in-windows-node-js-path-join-prepends-the-current-working-directorys-drive
             __dirname = __dirname.replace(/^\/([a-zA-Z]:)/, '$1');
         }
-        const wasmPath = path.join(__dirname, '../Fixed64Native.wasm');
+        const wasmPath = path.join(__dirname, './Fixed64Native.wasm');
         return fs.readFile(wasmPath);
     }
     throw new Error('Unsupported environment');

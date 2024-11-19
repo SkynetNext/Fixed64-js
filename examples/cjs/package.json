@@ -7,7 +7,7 @@
         "test": "node Fixed64Example.js"
     },
     "dependencies": {
-        "fixed64-js": "^1.0.5",
+        "fixed64-js": "^1.0.6",
         "typescript": "^5.6.3",
         "@types/node": "^22.9.0"
     }
