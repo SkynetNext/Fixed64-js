@@ -30,7 +30,7 @@ exports.fixed64ParamOffsets = exports.sizeOfFixed64Param = exports.interopReturn
 exports.loadFixed64Wasm = loadFixed64Wasm;
 // Fixed64WasmLoader.ts
 const path_1 = require("path");
-const Fixed64Native_js_1 = __importDefault(require("../../dist/Fixed64Native.js"));
+const Fixed64Native_js_1 = __importDefault(require("../../dist/cjs/Fixed64Native.js"));
 let __dirname = (0, path_1.dirname)(require.main?.filename || '');
 async function loadWasmFile() {
     if (typeof window !== 'undefined') {

@@ -1,20 +1,33 @@
 {
-  "name": "fixed64.js",
-  "version": "1.0.0",
-  "main": "dist/cjs/Fixed64.js",
-  "module": "dist/esm/Fixed64.js",
-  "types": "dist/cjs/Fixed64.d.ts",
-  "type": "module",
-  "scripts": {
-    "build:cjs": "tsc -p tsconfig.cjs.json",
-    "build:esm": "tsc -p tsconfig.esm.json",
-    "build": "npm run build:cjs && npm run build:esm"
-  },
-  "devDependencies": {
-    "@types/node": "^22.9.0",
-    "typescript": "^5.6.3"
-  },
-  "dependencies": {
-    "undici": "^6.21.0"
-  }
+    "name": "fixed64.js",
+    "version": "1.0.0",
+    "main": "dist/cjs/index.js",
+    "module": "dist/esm/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        "import": "./dist/esm/index.js",
+        "require": "./dist/cjs/index.js"
+    },
+    "scripts": {
+        "install:cjs": "cd src/cjs && npm install",
+        "install:esm": "cd src/esm && npm install",
+        "build:cjs": "cd src/cjs && npm run build",
+        "build:esm": "cd src/esm && npm run build",
+        "install:examples:cjs": "cd examples/cjs && npm install",
+        "install:examples:esm": "cd examples/esm && npm install ",
+        "build:examples:cjs": "cd examples/cjs && npm run build",
+        "build:examples:esm": "cd examples/esm && npm run build",
+        "install": "npm run install:cjs && npm run install:esm && npm run install:examples:cjs && npm run install:examples:esm",
+        "build": "npm run build:cjs && npm run build:esm && npm run build:examples:cjs && npm run build:examples:esm",
+        "test:cjs": "cd examples/cjs && npm run test",
+        "test:esm": "cd examples/esm && npm run test",
+        "test": "npm run test:cjs && npm run test:esm"
+    },
+    "devDependencies": {
+        "@types/node": "^22.9.0",
+        "typescript": "^5.6.3"
+    },
+    "dependencies": {
+        "undici": "^6.21.0"
+    }
 }

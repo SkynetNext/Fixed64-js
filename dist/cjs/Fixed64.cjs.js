@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.Fixed64 = void 0;
 /* eslint-disable */
 // Fixed64.ts
-const Fixed64WasmLoader_esm_js_1 = require("./Fixed64WasmLoader.esm.js");
+const Fixed64WasmLoader_cjs_js_1 = require("./Fixed64WasmLoader.cjs.js");
 const tempHighLow = { high: 0, low: 0 };
 const tempFixed64Array = Array.from({ length: 16 }, () => ({ isRaw: false, raw: 0, high: 0, low: 0 }));
 let tempFixed64ArrayOffset = 0;
@@ -116,18 +116,18 @@ class Fixed64 {
     }
     static prepareInteropParamArray(...decimals) {
         function setInteropParam(index, value) {
-            const offset = index * Fixed64WasmLoader_esm_js_1.sizeOfFixed64Param;
-            const address = Fixed64WasmLoader_esm_js_1.interopParamArrayAddress + offset;
+            const offset = index * Fixed64WasmLoader_cjs_js_1.sizeOfFixed64Param;
+            const address = Fixed64WasmLoader_cjs_js_1.interopParamArrayAddress + offset;
             // Update boolean value
-            Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAP32[(address + Fixed64WasmLoader_esm_js_1.fixed64ParamOffsets.isRaw) >> 2] = value.isRaw ? 1 : 0;
+            Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAP32[(address + Fixed64WasmLoader_cjs_js_1.fixed64ParamOffsets.isRaw) >> 2] = value.isRaw ? 1 : 0;
             if (value.isRaw) {
                 // Update double-precision floating-point number
-                Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAPF64[(address + Fixed64WasmLoader_esm_js_1.fixed64ParamOffsets.raw) >> 3] = value.raw;
+                Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAPF64[(address + Fixed64WasmLoader_cjs_js_1.fixed64ParamOffsets.raw) >> 3] = value.raw;
             }
             else {
                 // Update integer
-                Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAP32[(address + Fixed64WasmLoader_esm_js_1.fixed64ParamOffsets.high) >> 2] = value.high;
-                Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAPU32[(address + Fixed64WasmLoader_esm_js_1.fixed64ParamOffsets.low) >> 2] = value.low;
+                Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAP32[(address + Fixed64WasmLoader_cjs_js_1.fixed64ParamOffsets.high) >> 2] = value.high;
+                Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAPU32[(address + Fixed64WasmLoader_cjs_js_1.fixed64ParamOffsets.low) >> 2] = value.low;
             }
         }
         for (let index = 0; index < decimals.length; index++) {
@@ -142,16 +142,16 @@ class Fixed64 {
     }
     static prepareInteropParamUint32Array(params) {
         for (let index = 0; index < params.length; index++) {
-            const valueAddress = Fixed64WasmLoader_esm_js_1.interopParamUint32ArrayAddress + index * 4;
-            Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAPU32[valueAddress >> 2] = params[index];
+            const valueAddress = Fixed64WasmLoader_cjs_js_1.interopParamUint32ArrayAddress + index * 4;
+            Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAPU32[valueAddress >> 2] = params[index];
         }
     }
     static getInteropReturn(index, out) {
-        const offset = index * Fixed64WasmLoader_esm_js_1.sizeOfFixed64Param;
-        const address = Fixed64WasmLoader_esm_js_1.interopReturnArrayAddress + offset;
+        const offset = index * Fixed64WasmLoader_cjs_js_1.sizeOfFixed64Param;
+        const address = Fixed64WasmLoader_cjs_js_1.interopReturnArrayAddress + offset;
         // Read integer
-        const high = Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAP32[(address + Fixed64WasmLoader_esm_js_1.fixed64ParamOffsets.high) >> 2];
-        const low = Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAPU32[(address + Fixed64WasmLoader_esm_js_1.fixed64ParamOffsets.low) >> 2];
+        const high = Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAP32[(address + Fixed64WasmLoader_cjs_js_1.fixed64ParamOffsets.high) >> 2];
+        const low = Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAPU32[(address + Fixed64WasmLoader_cjs_js_1.fixed64ParamOffsets.low) >> 2];
         if (out) {
             out.isRaw = false;
             out.raw = 0;
@@ -164,13 +164,13 @@ class Fixed64 {
         }
     }
     static getInteropReturnUint32ArrayLength() {
-        const length = Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAPU32[Fixed64WasmLoader_esm_js_1.interopReturnUint32ArrayAddress >> 2];
+        const length = Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAPU32[Fixed64WasmLoader_cjs_js_1.interopReturnUint32ArrayAddress >> 2];
         return length;
     }
     static getInteropReturnUint32ArrayValue(index) {
         const offset = (1 + index) * 4;
-        const valueAddress = Fixed64WasmLoader_esm_js_1.interopReturnUint32ArrayAddress + offset;
-        const value = Fixed64WasmLoader_esm_js_1.Fixed64Module.HEAPU32[valueAddress >> 2];
+        const valueAddress = Fixed64WasmLoader_cjs_js_1.interopReturnUint32ArrayAddress + offset;
+        const value = Fixed64WasmLoader_cjs_js_1.Fixed64Module.HEAPU32[valueAddress >> 2];
         return value;
     }
     // Utility Functions
@@ -180,7 +180,7 @@ class Fixed64 {
             return this.raw;
         }
         Fixed64.prepareInteropParamArray(this);
-        return Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.toNumber();
+        return Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.toNumber();
     }
     get highLow() {
         return [this.high, this.low];
@@ -336,7 +336,7 @@ class Fixed64 {
             return out?.set(0) || new Fixed64(0);
         }
         Fixed64.prepareInteropParamArray(this, bFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.mul();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.mul();
         return Fixed64.getInteropReturn(0, out);
     }
     dividedBy(n, out) {
@@ -345,7 +345,7 @@ class Fixed64 {
             return out?.set(this) || this;
         }
         Fixed64.prepareInteropParamArray(this, nFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.div();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.div();
         return Fixed64.getInteropReturn(0, out);
     }
     /**
@@ -361,7 +361,7 @@ class Fixed64 {
     mod(b, out) {
         const bFixed64 = Fixed64.toFixed64Param(b);
         Fixed64.prepareInteropParamArray(this, bFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.mod();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.mod();
         return Fixed64.getInteropReturn(0, out);
     }
     negated() {
@@ -372,7 +372,7 @@ class Fixed64 {
     }
     square(out) {
         Fixed64.prepareInteropParamArray(this);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.square();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.square();
         return Fixed64.getInteropReturn(0, out);
     }
     /**
@@ -381,18 +381,18 @@ class Fixed64 {
      */
     pow2(out) {
         Fixed64.prepareInteropParamArray(this);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.pow2();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.pow2();
         return Fixed64.getInteropReturn(0, out);
     }
     static sqrt(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.sqrt();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.sqrt();
         return Fixed64.getInteropReturn(0, out);
     }
     sqrt(out) {
         Fixed64.prepareInteropParamArray(this);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.sqrt();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.sqrt();
         return Fixed64.getInteropReturn(0, out);
     }
     // Comparison Operations
@@ -444,34 +444,34 @@ class Fixed64 {
     static ceil(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.ceil();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.ceil();
         return Fixed64.getInteropReturn(0, out);
     }
     ceil(out) {
         Fixed64.prepareInteropParamArray(this);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.ceil();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.ceil();
         return Fixed64.getInteropReturn(0, out);
     }
     static floor(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.floor();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.floor();
         return Fixed64.getInteropReturn(0, out);
     }
     floor(out) {
         Fixed64.prepareInteropParamArray(this);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.floor();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.floor();
         return Fixed64.getInteropReturn(0, out);
     }
     static round(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.round();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.round();
         return Fixed64.getInteropReturn(0, out);
     }
     round(out) {
         Fixed64.prepareInteropParamArray(this);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.round();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.round();
         return Fixed64.getInteropReturn(0, out);
     }
     // Static Math Functions
@@ -479,42 +479,42 @@ class Fixed64 {
     static cos(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.cos();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.cos();
         return Fixed64.getInteropReturn(0, out);
     }
     // Sine
     static sin(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.sin();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.sin();
         return Fixed64.getInteropReturn(0, out);
     }
     // Tangent
     static tan(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.tan();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.tan();
         return Fixed64.getInteropReturn(0, out);
     }
     // Inverse Cosine
     static acos(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.acos();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.acos();
         return Fixed64.getInteropReturn(0, out);
     }
     // Inverse Sine
     static asin(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.asin();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.asin();
         return Fixed64.getInteropReturn(0, out);
     }
     // Inverse Tangent
     static atan(a, out) {
         const aFixed64 = Fixed64.toFixed64Param(a);
         Fixed64.prepareInteropParamArray(aFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.atan();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.atan();
         return Fixed64.getInteropReturn(0, out);
     }
     // Inverse Tangent of y/x
@@ -522,7 +522,7 @@ class Fixed64 {
         const yFixed64 = Fixed64.toFixed64Param(y);
         const xFixed64 = Fixed64.toFixed64Param(x);
         Fixed64.prepareInteropParamArray(yFixed64, xFixed64);
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.atan2();
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.atan2();
         return Fixed64.getInteropReturn(0, out);
     }
     static clamp(a, min, max, out) {
@@ -544,19 +544,19 @@ class Fixed64 {
     // Maximum
     static max(...args) {
         Fixed64.prepareInteropParamArray(...args.map(arg => Fixed64.toFixed64Param(arg)));
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.max(args.length);
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.max(args.length);
         return Fixed64.getInteropReturn(0);
     }
     // Minimum
     static min(...args) {
         Fixed64.prepareInteropParamArray(...args.map(arg => Fixed64.toFixed64Param(arg)));
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.min(args.length);
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.min(args.length);
         return Fixed64.getInteropReturn(0);
     }
     // Sum
     static sum(...args) {
         Fixed64.prepareInteropParamArray(...args.map(arg => Fixed64.toFixed64Param(arg)));
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.sum(args.length);
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.sum(args.length);
         return Fixed64.getInteropReturn(0);
     }
     // Is Integer
@@ -574,7 +574,7 @@ class Fixed64 {
     */
     isFinite() {
         Fixed64.prepareInteropParamArray(this);
-        return Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.isFinite();
+        return Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.isFinite();
     }
     /**
     * - Fixed64.NaN's characteristics are: isNaN() returns true, isInfinity() returns false, isFinite() returns false.
@@ -582,7 +582,7 @@ class Fixed64 {
     */
     isNaN() {
         Fixed64.prepareInteropParamArray(this);
-        return Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.isNaN();
+        return Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.isNaN();
     }
     /**
     * - Fixed64.NaN's characteristics are: isNaN() returns true, isInfinity() returns false, isFinite() returns false.
@@ -590,7 +590,7 @@ class Fixed64 {
     */
     isInfinity() {
         Fixed64.prepareInteropParamArray(this);
-        return Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.isInfinity();
+        return Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.isInfinity();
     }
     // Is Zero
     static isZero(values) {
@@ -642,7 +642,7 @@ class Fixed64 {
         return new Fixed64(n).cmp(0);
     }
     static parseFloat(n, out) {
-        Fixed64WasmLoader_esm_js_1.Fixed64Module.Fixed64Native.parseFloat(n);
+        Fixed64WasmLoader_cjs_js_1.Fixed64Module.Fixed64Native.parseFloat(n);
         return Fixed64.getInteropReturn(0, out);
     }
     /**

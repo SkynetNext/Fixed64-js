@@ -18,21 +18,30 @@ if "%EMSDK%"=="" (
     exit /b 1
 )
 
-call :build_wasm
+REM Build for esm and cjs, each in its own build directory
+call :build_wasm esm esm_build
+call :build_wasm cjs cjs_build
 
 pause
 goto :eof
 
 :build_wasm
 setlocal
+set GEN_TYPE=%1
+set BUILD_DIR=%2
 set ORIGINAL_DIR=%CD%
 
-REM Create the build directory and enter it
-set BUILD_DIR=build
+REM Setting TARGET_OUTPUT_PATH based on GEN_TYPE
+set TARGET_OUTPUT_PATH=..\\..\\dist\\%GEN_TYPE%
+
+echo Building for %GEN_TYPE% in directory %BUILD_DIR% with output path %TARGET_OUTPUT_PATH%
+
+REM Create the build directory (if it does not exist) and enter it
 if not exist %BUILD_DIR% mkdir %BUILD_DIR%
 cd %BUILD_DIR%
-REM Use call to execute emcmake and cmake commands
-call emcmake cmake -GNinja ..
+
+REM Use call to execute emcmake and cmake commands, passing GEN_TYPE and TARGET_OUTPUT_PATH
+call emcmake cmake -GNinja -DGEN_TYPE=%GEN_TYPE% -DTARGET_OUTPUT_PATH=%TARGET_OUTPUT_PATH% ..
 if %errorlevel% neq 0 (
     cd %ORIGINAL_DIR%
     exit /b %errorlevel%

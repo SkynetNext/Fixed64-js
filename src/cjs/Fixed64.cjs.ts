@@ -1,7 +1,7 @@
 /* eslint-disable */
 // Fixed64.ts
 import { Fixed64Module, interopReturnArrayAddress, interopReturnUint32ArrayAddress, fixed64ParamOffsets, interopParamArrayAddress, sizeOfFixed64Param, interopParamUint32ArrayAddress } from './Fixed64WasmLoader.cjs.js';
-import { Fixed64Param } from '../../dist/Fixed64Native.js';
+import { Fixed64Param } from '../../dist/cjs/Fixed64Native.js';
 
 export namespace Fixed64 {
     export type Constructor = typeof Fixed64;

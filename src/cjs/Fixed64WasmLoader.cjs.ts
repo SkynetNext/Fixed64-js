@@ -1,6 +1,6 @@
 // Fixed64WasmLoader.ts
 import { dirname, join } from 'path';
-import MainModuleFactory from '../../dist/Fixed64Native.js';
+import MainModuleFactory from '../../dist/cjs/Fixed64Native.js';
 
 let __dirname = dirname(require.main?.filename || '');
 

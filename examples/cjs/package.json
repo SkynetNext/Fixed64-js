@@ -1,0 +1,12 @@
+{
+    "version": "1.0.0",
+    "scripts": {
+        "build": "tsc",
+        "test": "node Fixed64Example.js"
+    },
+    "dependencies": {
+        "fixed64.js": "file:../cjs",
+        "typescript": "^5.6.3",
+        "@types/node": "^22.9.0"
+    }
+}

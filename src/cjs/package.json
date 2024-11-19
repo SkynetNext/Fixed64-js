@@ -1,0 +1,14 @@
+{
+  "main": "Fixed64WasmLoader.cjs.js",
+  "type": "commonjs",
+  "scripts": {
+    "build": "tsc"
+  },
+  "devDependencies": {
+    "@types/node": "^22.9.0",
+    "typescript": "^5.6.3"
+  },
+  "dependencies": {
+    "undici": "^6.21.0"
+  }
+}

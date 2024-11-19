@@ -43,8 +43,16 @@ endfunction()
 include_and_source_subdirectories("${CMAKE_CURRENT_SOURCE_DIR}/src")
 
 # Link options and properties
-target_link_options(Fixed64Native PRIVATE "SHELL:-s WASM=1 -s DYNAMIC_EXECUTION=0 --bind -s MODULARIZE=1 -s EXPORT_ES6=1 -s ALLOW_MEMORY_GROWTH=1 --emit-tsd Fixed64Native.d.ts")
-set_target_properties(Fixed64Native PROPERTIES
-    SUFFIX ".js"
-    RUNTIME_OUTPUT_DIRECTORY ${TARGET_OUTPUT_PATH}
-)
+if(GEN_TYPE STREQUAL "esm")
+  target_link_options(Fixed64Native PRIVATE "SHELL:-s WASM=1 -s DYNAMIC_EXECUTION=0 --bind -s MODULARIZE=1 -s EXPORT_ES6=1 -s ALLOW_MEMORY_GROWTH=1 --emit-tsd Fixed64Native.d.ts")
+  set_target_properties(Fixed64Native PROPERTIES
+      SUFFIX ".js"
+      RUNTIME_OUTPUT_DIRECTORY ${TARGET_OUTPUT_PATH}
+  )
+else()
+  target_link_options(Fixed64Native PRIVATE "SHELL:-s WASM=1 -s DYNAMIC_EXECUTION=0 --bind -s ALLOW_MEMORY_GROWTH=1 --emit-tsd Fixed64Native.d.ts")
+  set_target_properties(Fixed64Native PROPERTIES
+      SUFFIX ".js"
+      RUNTIME_OUTPUT_DIRECTORY ${TARGET_OUTPUT_PATH}
+  )
+endif()

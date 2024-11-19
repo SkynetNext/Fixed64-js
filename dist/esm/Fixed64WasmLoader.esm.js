@@ -1,6 +1,6 @@
 // Fixed64WasmLoader.ts
 import path, { dirname } from 'path';
-import MainModuleFactory from '../../dist/Fixed64Native.js';
+import MainModuleFactory from '../../dist/esm/Fixed64Native.js';
 let __dirname = dirname(new URL(import.meta.url).pathname);
 export let Fixed64Module;
 export let interopParamArrayAddress;
