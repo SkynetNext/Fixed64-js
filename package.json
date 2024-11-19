@@ -1,23 +1,40 @@
 {
-    "name": "fixed64.js",
-    "version": "1.0.0",
-    "main": "dist/cjs/index.js",
-    "module": "dist/esm/index.js",
-    "types": "dist/index.d.ts",
+    "name": "fixed64-js",
+    "version": "1.0.5",
+    "main": "fixed64",
+    "module": "dist/esm/index.mjs",
+    "browser": "dist/cjs/index.js",
     "exports": {
-        "import": "./dist/esm/index.js",
-        "require": "./dist/cjs/index.js"
+        ".": {
+            "types": "./fixed64-js.d.ts",
+            "import": "./dist/esm/index.mjs",
+            "require": "./dist/cjs/index.js"
+        },
+        "./fixed64.mjs": "./dist/esm/index.mjs",
+        "./fixed64.js": "./dist/cjs/index.js",
+        "./package.json": "./package.json",
+        "./fixed64": {
+            "types": "./fixed64-js.d.ts",
+            "import": "./dist/esm/index.mjs",
+            "require": "./dist/cjs/index.js"
+        }
     },
+    "types": "fixed64-js.d.ts",
+    "files": [
+        "dist/cjs",
+        "dist/esm",
+        "fixed64-js.d.ts"
+    ],
     "scripts": {
-        "install:cjs": "cd src/cjs && npm install",
-        "install:esm": "cd src/esm && npm install",
+        "setup:cjs": "cd src/cjs && npm install",
+        "setup:esm": "cd src/esm && npm install",
         "build:cjs": "cd src/cjs && npm run build",
         "build:esm": "cd src/esm && npm run build",
-        "install:examples:cjs": "cd examples/cjs && npm install",
-        "install:examples:esm": "cd examples/esm && npm install ",
+        "setup:examples:cjs": "cd examples/cjs && npm install",
+        "setup:examples:esm": "cd examples/esm && npm install",
         "build:examples:cjs": "cd examples/cjs && npm run build",
         "build:examples:esm": "cd examples/esm && npm run build",
-        "install": "npm run install:cjs && npm run install:esm && npm run install:examples:cjs && npm run install:examples:esm",
+        "setup": "npm run setup:cjs && npm run setup:esm && npm run setup:examples:cjs && npm run setup:examples:esm",
         "build": "npm run build:cjs && npm run build:esm && npm run build:examples:cjs && npm run build:examples:esm",
         "test:cjs": "cd examples/cjs && npm run test",
         "test:esm": "cd examples/esm && npm run test",
@@ -29,5 +46,27 @@
     },
     "dependencies": {
         "undici": "^6.21.0"
-    }
+    },
+    "keywords": [
+        "fixed64",
+        "math",
+        "arithmetic",
+        "number",
+        "Trigonometric",
+        "high-performance",
+        "emcc",
+        "webassembly",
+        "Emscripten ",
+        "wasm",
+        "cross-platform"
+    ],
+    "author": {
+        "name": "justinzhu",
+        "email": "aresky@gmail.com"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/SkynetNext/Fixed64.js"
+    },
+    "license": "BSD-3-Clause"
 }

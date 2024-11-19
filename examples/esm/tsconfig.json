@@ -1,8 +1,12 @@
 {
-    "extends": "../../tsconfig.json",
     "compilerOptions": {
+        "target": "es2021",
+        "esModuleInterop": true,
+        "skipLibCheck": true,
+        "strict": true,
         "declaration": false,
-        "module": "esnext",
+        "module": "NodeNext",
+        "moduleResolution": "nodenext",
         "outDir": "./"
     },
     "include": [

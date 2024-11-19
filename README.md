@@ -1,4 +1,4 @@
-# Fixed64.js
+# Fixed64-js
 
 ## Overview
 
@@ -86,4 +86,4 @@ To use Fixed64 in your project, follow these steps:
 
 1. **Install the library** (assuming it's published to npm or similar):
    ```bash
-   npm install fixed64.js
+   npm install fixed64-js

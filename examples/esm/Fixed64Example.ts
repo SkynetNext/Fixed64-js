@@ -1,6 +1,5 @@
 // Fixed64Example.ts
-import { loadFixed64Wasm } from '../../dist/esm/Fixed64WasmLoader.esm.js';
-import { Fixed64 } from '../../dist/esm/Fixed64.js';
+import { Fixed64, loadFixed64Wasm } from 'fixed64-js';
 
 async function main() {
     // Load the Fixed64 module

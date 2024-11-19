@@ -1,6 +1,6 @@
 /* eslint-disable */
 // Fixed64.ts
-import { Fixed64Module, interopReturnArrayAddress, interopReturnUint32ArrayAddress, fixed64ParamOffsets, interopParamArrayAddress, sizeOfFixed64Param, interopParamUint32ArrayAddress } from './Fixed64WasmLoader.esm.js';
+import { Fixed64Module, interopReturnArrayAddress, interopReturnUint32ArrayAddress, fixed64ParamOffsets, interopParamArrayAddress, sizeOfFixed64Param, interopParamUint32ArrayAddress } from './Fixed64WasmLoader.esm.mjs';
 const tempHighLow = { high: 0, low: 0 };
 const tempFixed64Array = Array.from({ length: 16 }, () => ({ isRaw: false, raw: 0, high: 0, low: 0 }));
 let tempFixed64ArrayOffset = 0;
