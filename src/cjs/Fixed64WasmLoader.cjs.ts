@@ -32,25 +32,13 @@ async function loadWasmFile(): Promise<Uint8Array> {
 export async function loadFixed64Wasm(): Promise<any> {
     if (!Fixed64Module) {
         const wasmData = await loadWasmFile();
-        const ModuleFactory = await MainModuleFactory();
-        Fixed64Module = await initWasm(ModuleFactory, wasmData);
-        interopParamArrayAddress = Fixed64Module._getInteropParamArrayAddress();
-        interopParamUint32ArrayAddress = Fixed64Module._getInteropUint32ParamArrayAddress();
-        interopReturnArrayAddress = Fixed64Module._getInteropReturnArrayAddress();
-        interopReturnUint32ArrayAddress = Fixed64Module._getInteropReturnUint32ArrayAddress();
-        sizeOfFixed64Param = Fixed64Module._getSizeOfFixed64Param();
-        fixed64ParamOffsets = Fixed64Module._getFixed64ParamOffsets();
+        Fixed64Module = await MainModuleFactory({ wasmBinary: wasmData });
+        interopParamArrayAddress = Fixed64Module.getInteropParamArrayAddress();
+        interopParamUint32ArrayAddress = Fixed64Module.getInteropUint32ParamArrayAddress();
+        interopReturnArrayAddress = Fixed64Module.getInteropReturnArrayAddress();
+        interopReturnUint32ArrayAddress = Fixed64Module.getInteropReturnUint32ArrayAddress();
+        sizeOfFixed64Param = Fixed64Module.getSizeOfFixed64Param();
+        fixed64ParamOffsets = Fixed64Module.getFixed64ParamOffsets();
     }
     return Fixed64Module;
-}
-
-async function initWasm(Module: any, wasmData: Uint8Array): Promise<any> {
-    return new Promise<any>((resolve, reject) => {
-        Module({
-            wasmBinary: wasmData,
-            onRuntimeInitialized: function () {
-                resolve(this);
-            }
-        });
-    });
 }

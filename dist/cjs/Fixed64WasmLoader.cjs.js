@@ -52,24 +52,13 @@ async function loadWasmFile() {
 async function loadFixed64Wasm() {
     if (!exports.Fixed64Module) {
         const wasmData = await loadWasmFile();
-        const ModuleFactory = await (0, Fixed64Native_js_1.default)();
-        exports.Fixed64Module = await initWasm(ModuleFactory, wasmData);
-        exports.interopParamArrayAddress = exports.Fixed64Module._getInteropParamArrayAddress();
-        exports.interopParamUint32ArrayAddress = exports.Fixed64Module._getInteropUint32ParamArrayAddress();
-        exports.interopReturnArrayAddress = exports.Fixed64Module._getInteropReturnArrayAddress();
-        exports.interopReturnUint32ArrayAddress = exports.Fixed64Module._getInteropReturnUint32ArrayAddress();
-        exports.sizeOfFixed64Param = exports.Fixed64Module._getSizeOfFixed64Param();
-        exports.fixed64ParamOffsets = exports.Fixed64Module._getFixed64ParamOffsets();
+        exports.Fixed64Module = await (0, Fixed64Native_js_1.default)({ wasmBinary: wasmData });
+        exports.interopParamArrayAddress = exports.Fixed64Module.getInteropParamArrayAddress();
+        exports.interopParamUint32ArrayAddress = exports.Fixed64Module.getInteropUint32ParamArrayAddress();
+        exports.interopReturnArrayAddress = exports.Fixed64Module.getInteropReturnArrayAddress();
+        exports.interopReturnUint32ArrayAddress = exports.Fixed64Module.getInteropReturnUint32ArrayAddress();
+        exports.sizeOfFixed64Param = exports.Fixed64Module.getSizeOfFixed64Param();
+        exports.fixed64ParamOffsets = exports.Fixed64Module.getFixed64ParamOffsets();
     }
     return exports.Fixed64Module;
-}
-async function initWasm(Module, wasmData) {
-    return new Promise((resolve, reject) => {
-        Module({
-            wasmBinary: wasmData,
-            onRuntimeInitialized: function () {
-                resolve(this);
-            }
-        });
-    });
 }
