@@ -1,9 +1,9 @@
 // Fixed64Example.ts
-import { Fixed64, loadFixed64Wasm } from 'fixed64-js';
+import { Fixed64, loadFixed64Wasm, loadWasmFileFromWeb } from 'fixed64-js';
 
 async function main() {
     // Load the Fixed64 module
-    await loadFixed64Wasm().then(() => {
+    await loadFixed64Wasm(() => loadWasmFileFromWeb('./Fixed64Native.wasm')).then(() => {
         console.log("=== loadFixed64Wasm:success =========== ");
     }).catch(error => {
         console.error("Error loadFixed64Wasm module:", error);

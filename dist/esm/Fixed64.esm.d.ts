@@ -1,4 +1,4 @@
-import { Fixed64Param } from '../../dist/esm/Fixed64Native.js';
+import { Fixed64Param } from '../../dist/esm/Fixed64Native.mjs';
 export declare namespace Fixed64 {
     type Constructor = typeof Fixed64;
     type Instance = Fixed64;

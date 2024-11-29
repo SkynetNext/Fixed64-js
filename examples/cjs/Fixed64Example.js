@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const fixed64_js_1 = require("fixed64-js");
 async function main() {
     // Load the Fixed64 module
-    await (0, fixed64_js_1.loadFixed64Wasm)().then(() => {
+    await (0, fixed64_js_1.loadFixed64Wasm)(() => (0, fixed64_js_1.loadWasmFileFromNode)('./Fixed64Native.wasm')).then(() => {
         console.log("=== loadFixed64Wasm:success =========== ");
     }).catch(error => {
         console.error("Error loadFixed64Wasm module:", error);

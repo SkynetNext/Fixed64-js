@@ -1,14 +1,16 @@
 {
-    "name": "fixed64-example",
-    "version": "1.0.0",
-    "type": "module",
-    "scripts": {
-        "build": "tsc",
-        "test": "node Fixed64Example.js"
-    },
-    "dependencies": {
-        "fixed64-js": "^1.0.6",
-        "typescript": "^5.6.3",
-        "@types/node": "^22.9.0"
-    }
+  "name": "fixed64-example",
+  "version": "1.0.0",
+  "type": "module",
+  "scripts": {
+    "build": "tsc",
+    "test": "node Fixed64Example.js"
+  },
+  "dependencies": {
+    "@parcel/packager-wasm": "^2.13.0",
+    "@types/node": "^22.9.0",
+    "fixed64-js": "^1.0.6",
+    "parcel": "^2.13.0",
+    "typescript": "^5.6.3"
+  }
 }

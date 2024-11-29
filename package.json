@@ -45,6 +45,7 @@
         "typescript": "^5.6.3"
     },
     "dependencies": {
+        "@parcel/packager-wasm": "^2.13.0",
         "undici": "^6.21.0"
     },
     "keywords": [

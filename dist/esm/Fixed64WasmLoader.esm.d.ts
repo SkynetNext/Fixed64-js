@@ -5,4 +5,6 @@ export declare let interopReturnArrayAddress: number;
 export declare let interopReturnUint32ArrayAddress: number;
 export declare let sizeOfFixed64Param: number;
 export declare let fixed64ParamOffsets: any;
-export declare function loadFixed64Wasm(): Promise<any>;
+type LoadWasmFileFunction = () => Promise<Uint8Array>;
+export declare function loadFixed64Wasm(loadWasmFile: LoadWasmFileFunction): Promise<any>;
+export {};
